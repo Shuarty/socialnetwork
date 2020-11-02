@@ -30,25 +30,29 @@ export class CommentForm extends React.Component {
     }));
   };
 
-  getComment = () => {
+  getComment = async () => {
     const action = fetchGetComments();
-    this.props.dispatch(action);
+    await this.props.dispatch(action);
   };
 
-  submitComment(event) {
+  addComment = async () => {
     const newComment = {
       message: this.state.message,
       commentable_id: this.props.postID,
       commentable_type: "Comment",
     };
+
     const action = fetchComment(newComment);
-    this.props.dispatch(action);
+    await this.props.dispatch(action);
+  };
+
+  submitComment(event) {
+    this.addComment().then(this.getComment);
 
     this.setState({
       message: "",
     });
 
-    this.getComment();
     event.preventDefault();
   }
 

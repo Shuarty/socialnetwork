@@ -3,6 +3,8 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { fetchGetComments } from "../../model/actions/commentAction";
+import { connect } from "react-redux";
 
 import CommentForm from "./CommentForm";
 import CommentsAll from "./CommentsAll";
@@ -30,11 +32,21 @@ export class CommentContentxxx extends React.Component {
   }
 }
 
-export default class Comment extends React.Component {
+class Comment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.clickHandler = this.clickHandler.bind(this);
   }
+
+  getComments = async () => {
+    const action = fetchGetComments();
+    await this.props.dispatch(action);
+  };
+
+  clickHandler = () => {
+    this.getComments();
+  };
 
   render() {
     return (
@@ -44,6 +56,7 @@ export default class Comment extends React.Component {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
+            onClick={this.clickHandler}
           >
             Show Comments
           </AccordionSummary>
@@ -54,3 +67,5 @@ export default class Comment extends React.Component {
     );
   }
 }
+
+export default connect(null, null)(Comment);

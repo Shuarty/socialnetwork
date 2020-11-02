@@ -7,14 +7,13 @@ import Profile from "./components/Profile/Profile";
 import PostsWrapper from "./components/Posts/PostsWrapper";
 import Post from "./components/Posts/OnePost";
 
-const redirect =
-  localStorage.getItem("access-token") &&
-  localStorage.getItem("client") &&
-  localStorage.getItem("uid") ? (
-    <Redirect to="/main" />
-  ) : (
-    <Redirect to="/login" />
-  );
+const items = {
+  "Access-Token": localStorage.getItem("access-token"),
+  client: localStorage.getItem("client"),
+  uid: localStorage.getItem("uid"),
+};
+
+const redirect = items ? <Redirect to="/main" /> : <Redirect to="/login" />;
 
 const App = () => {
   return (
