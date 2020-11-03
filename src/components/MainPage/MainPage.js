@@ -10,8 +10,9 @@ import { fetchGetComments } from "../../model/actions/commentAction";
 import { fetchPost } from "../../model/actions/postsAction";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { logoutUser } from "../../model/actions/loginAction";
 
-function SimpleMenu() {
+function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -25,9 +26,10 @@ function SimpleMenu() {
   const handleLogout = () => {
     localStorage.clear();
     localStorage.removeItem("user-id");
+    const action = logoutUser();
+    props.dispatch(action);
     setTimeout(setAnchorEl(null), 500);
   };
-
   return (
     <div>
       <Button
@@ -82,7 +84,7 @@ class MainPage extends React.Component {
     return (
       <div>
         <nav className="navbar">
-          <SimpleMenu />
+          <SimpleMenu {...this.props} />
         </nav>
         <div className="wrapper">
           <PostForm />

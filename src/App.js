@@ -27,7 +27,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        items["Access-Token"] === null ? (
+        props.auth === false ? (
           <Redirect to="/login" />
         ) : (
           <Component {...props} />
@@ -54,8 +54,8 @@ const App = (props) => {
           auth={props.auth}
           component={Post}
         />
-        <Route exact path="/login" component={LogIn} />
-        <Route exact path="/signup" component={SignUp} />
+        <Route exact auth={props.auth} path="/login" component={LogIn} />
+        <Route exact auth={props.auth} path="/signup" component={SignUp} />
         <PrivateRoute
           exact
           path="/profile"
