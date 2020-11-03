@@ -44,7 +44,7 @@ class SignUp extends React.Component {
     });
     this.props.dispatch(action);
 
-    setTimeout(() => (window.location.href = "/MainPage"), 1000);
+    setTimeout(() => (window.location.href = "/login"), 1000);
   };
 
   render() {

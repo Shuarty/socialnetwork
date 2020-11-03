@@ -17,8 +17,8 @@ class LogIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "Jojo@mail.jp",
-      password: "Jojo123321",
+      email: "",
+      password: "",
     };
     this.handleSubmitForm = this.handleSubmitForm.bind(this);
     this.handleChangeInput = this.handleChangeInput.bind(this);
@@ -36,11 +36,11 @@ class LogIn extends React.Component {
 
   handleSubmitForm = (event) => {
     event.preventDefault();
-    const data = {
+    const action = fetchLoginUser({
       email: this.state.email,
       password: this.state.password,
-    };
-    this.props.login(data);
+    });
+    this.props.dispatch(action);
   };
 
   render() {
@@ -103,10 +103,4 @@ class LogIn extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (data) => dispatch(fetchLoginUser(data)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(LogIn);
+export default connect(null, null)(LogIn);
