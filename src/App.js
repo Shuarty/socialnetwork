@@ -12,16 +12,26 @@ const items = {
   "Access-Token": localStorage.getItem("access-token"),
   client: localStorage.getItem("client"),
   uid: localStorage.getItem("uid"),
+  user_id: localStorage.getItem("user_id"),
 };
 
-const redirect = items ? <Redirect to="/login" /> : <Redirect to="/main" />;
+const redirect =
+  items["Access-Token"] === null ? (
+    <Redirect to="/login" />
+  ) : (
+    <Redirect to="/main" />
+  );
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
       render={(props) =>
-        items ? <Component {...props} /> : <Redirect to="/login" />
+        items["Access-Token"] === null ? (
+          <Redirect to="/login" />
+        ) : (
+          <Component {...props} />
+        )
       }
     />
   );

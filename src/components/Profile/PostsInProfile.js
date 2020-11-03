@@ -52,7 +52,7 @@ class PostInProfile extends React.Component {
   };
 
   render() {
-    let date = `${new Date(this.props.post.created_at.toString())}`;
+    let date = `${new Date(this.props.post.created_at)}`;
     return (
       <div className="card" key={this.props.post.id}>
         <Link to={`/posts/${this.props.post.id}`}>

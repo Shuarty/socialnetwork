@@ -42,7 +42,7 @@ class Posts extends React.Component {
 
 class OnePost extends React.Component {
   render() {
-    let date = `${new Date(this.props.post.created_at.toString())}`;
+    let date = `${new Date(this.props.post.created_at)}`;
 
     return (
       <div className="card" key={this.props.post.id}>

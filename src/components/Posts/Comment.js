@@ -11,7 +11,7 @@ import CommentsAll from "./CommentsAll";
 
 export class CommentContentxxx extends React.Component {
   render() {
-    let date = `${new Date(this.props.comment.created_at.toString())}`;
+    let date = `${new Date(this.props.comment.created_at)}`;
     return (
       <AccordionDetails className="comment">
         <div style={{ width: "100%" }}>

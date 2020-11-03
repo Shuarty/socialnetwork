@@ -10,9 +10,9 @@ class CommentsAll extends React.Component {
     this.state = { comments: [] };
   }
 
-  getComment = () => {
+  getComment = async () => {
     const action = fetchGetComments();
-    this.props.dispatch(action);
+    await this.props.dispatch(action);
   };
 
   componentDidMount() {

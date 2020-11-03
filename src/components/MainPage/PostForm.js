@@ -34,7 +34,7 @@ class PostForm extends React.Component {
   };
 
   submitHandler = (event) => {
-    this.addPost().then(this.getPosts);
+    this.addPost().then(setTimeout(this.getPosts, 500));
 
     this.setState({ title: "", description: "" });
 
