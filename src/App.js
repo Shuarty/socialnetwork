@@ -6,6 +6,7 @@ import SignUp from "./components/SignUp";
 import Profile from "./components/Profile/Profile";
 import PostsWrapper from "./components/Posts/PostsWrapper";
 import Post from "./components/Posts/OnePost";
+import { connect } from "react-redux";
 
 const items = {
   "Access-Token": localStorage.getItem("access-token"),
@@ -13,21 +14,55 @@ const items = {
   uid: localStorage.getItem("uid"),
 };
 
-const redirect = items ? <Redirect to="/main" /> : <Redirect to="/login" />;
+const redirect = items ? <Redirect to="/login" /> : <Redirect to="/main" />;
 
-const App = () => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        items ? <Component {...props} /> : <Redirect to="/login" />
+      }
+    />
+  );
+};
+
+const App = (props) => {
   return (
     <>
       <Switch>
-        <Route exact path="/main" component={MainPage} />
-        <Route exact path="/posts/" component={PostsWrapper} />
-        <Route exact path="/posts/:postID" component={Post} />
+        <PrivateRoute path="/main" auth={props.auth} component={MainPage} />
+        <PrivateRoute
+          exact
+          path="/posts/"
+          auth={props.auth}
+          component={PostsWrapper}
+        />
+        <PrivateRoute
+          exact
+          path="/posts/:postID"
+          auth={props.auth}
+          component={Post}
+        />
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/profile" component={Profile} />
+        <PrivateRoute
+          exact
+          path="/profile"
+          auth={props.auth}
+          component={Profile}
+        />
+
         {redirect}
       </Switch>
     </>
   );
 };
-export default withRouter(App);
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.loginReducer.isAuth,
+  };
+};
+
+export default withRouter(connect(mapStateToProps, null)(App));

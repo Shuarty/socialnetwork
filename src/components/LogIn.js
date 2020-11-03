@@ -36,15 +36,11 @@ class LogIn extends React.Component {
 
   handleSubmitForm = (event) => {
     event.preventDefault();
-    const action = fetchLoginUser({
+    const data = {
       email: this.state.email,
       password: this.state.password,
-    });
-    this.props.dispatch(action);
-
-    setTimeout(function () {
-      window.location.href = "/MainPage";
-    }, 1000);
+    };
+    this.props.login(data);
   };
 
   render() {
@@ -107,4 +103,10 @@ class LogIn extends React.Component {
   }
 }
 
-export default connect(null, null)(LogIn);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (data) => dispatch(fetchLoginUser(data)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(LogIn);

@@ -3,6 +3,7 @@ const initialState = {
   email: "",
   password: "",
   id: null,
+  isAuth: false,
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -10,7 +11,7 @@ const loginReducer = (state = initialState, action) => {
     case FETCH_LOGIN_USER:
       return { ...state };
     case REQUEST_LOGIN_USER:
-      return { ...state, data: action.payload };
+      return { ...state, data: action.payload, isAuth: true };
     default:
       return state;
   }

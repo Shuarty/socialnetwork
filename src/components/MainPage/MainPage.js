@@ -8,7 +8,7 @@ import PostForm from "./PostForm";
 import PostsInMain from "./PostsInMain";
 import { fetchGetComments } from "../../model/actions/commentAction";
 import { fetchPost } from "../../model/actions/postsAction";
-
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 function SimpleMenu() {
@@ -66,17 +66,16 @@ function SimpleMenu() {
 }
 
 class MainPage extends React.Component {
-  getComment = () => {
+  getComment = async () => {
     const action = fetchGetComments();
-    this.props.dispatch(action);
+    await this.props.dispatch(action);
   };
-  getPosts = () => {
+  getPosts = async () => {
     const action = fetchPost();
-    this.props.dispatch(action);
+    await this.props.dispatch(action);
   };
   componentDidMount() {
-    this.getPosts();
-    this.getComment();
+    this.getPosts().then(this.getComment());
   }
 
   render() {
@@ -99,7 +98,8 @@ class MainPage extends React.Component {
 const mapStateToProps = (state) => {
   return {
     posts: state.postsReducer.posts,
+    auth: state.loginReducer.isAuth,
   };
 };
 
-export default connect(mapStateToProps, null)(MainPage);
+export default withRouter(connect(mapStateToProps, null)(MainPage));
