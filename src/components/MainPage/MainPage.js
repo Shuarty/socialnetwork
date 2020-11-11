@@ -7,7 +7,7 @@ import "./MainPage.css";
 import PostForm from "./PostForm";
 import PostsInMain from "./PostsInMain";
 import { fetchGetComments } from "../../model/actions/commentAction";
-import { fetchPost } from "../../model/actions/postsAction";
+import { fetchPosts } from "../../model/actions/postsAction";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../model/actions/loginAction";
@@ -73,7 +73,7 @@ class MainPage extends React.Component {
     await this.props.dispatch(action);
   };
   getPosts = async () => {
-    const action = fetchPost();
+    const action = fetchPosts();
     await this.props.dispatch(action);
   };
   componentDidMount() {

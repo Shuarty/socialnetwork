@@ -10,7 +10,8 @@ import createSagaMiddleware from "redux-saga";
 import { rootReducer } from "./model/reducers/rootReducer";
 import sagasWatcherUser from "./model/sagas/loginSaga";
 import sagasWatcherUserAuth from "./model/sagas/signUpSaga";
-import sagasWatcherPost from "./model/sagas/getPostsSaga";
+import sagasWatcherPosts from "./model/sagas/getPostsSaga";
+import sagasWatcherOnePost from "./model/sagas/getOnePostSaga";
 import sagasWatcherPostAdd from "./model/sagas/addPostSaga";
 import sagasWatcherComments from "./model/sagas/getCommentsSaga";
 import sagasAddComment from "./model/sagas/addCommentSaga";
@@ -41,7 +42,8 @@ const persistor = persistStore(store);
 
 saga.run(sagasWatcherUser);
 saga.run(sagasWatcherUserAuth);
-saga.run(sagasWatcherPost);
+saga.run(sagasWatcherPosts);
+saga.run(sagasWatcherOnePost);
 saga.run(sagasWatcherPostAdd);
 saga.run(sagasWatcherComments);
 

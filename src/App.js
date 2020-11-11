@@ -9,51 +9,26 @@ import Post from "./components/Posts/OnePost";
 import { connect } from "react-redux";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        props.isAuth === false ? (
-          <Redirect to="/login" />
-        ) : (
-          <Component {...props} />
-        )
-      }
-    />
-  );
+  // console.log("resat", rest);
+  if (!rest.isAuth) return <Redirect to={"/login"} />;
+
+  return <Route {...rest} component={Component} />;
 };
 
 const App = (props) => {
   return (
     <Switch>
-      <PrivateRoute path="/main" auth={props.isAuth} component={MainPage} />
-      <PrivateRoute
-        exact
-        path="/posts/"
-        auth={props.isAuth}
-        component={PostsWrapper}
-      />
-      <PrivateRoute
-        exact
-        path="/posts/:postID"
-        auth={props.isAuth}
-        component={Post}
-      />
       <Route exact path="/login" component={LogIn} />
       <Route exact path="/signup" component={SignUp} />
-      <PrivateRoute
-        exact
-        path="/profile"
-        auth={props.isAuth}
-        component={Profile}
-      />
+      <PrivateRoute path="/main" {...props} component={MainPage} />
+
+      <PrivateRoute exact path="/posts/" {...props} component={PostsWrapper} />
+      <PrivateRoute exact path="/posts/:postID" {...props} component={Post} />
+
+      <PrivateRoute exact path="/profile" {...props} component={Profile} />
       <Route
         render={() =>
-          props.isAuth === true ? (
-            <Redirect to="/main" />
-          ) : (
-            <Redirect to="/login" />
-          )
+          props.isAuth ? <Redirect to="/main" /> : <Redirect to="/login" />
         }
       />
     </Switch>

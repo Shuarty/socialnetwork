@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import "./PostsWrapper.css";
 import { logoutUser } from "../../model/actions/loginAction";
 import { connect } from "react-redux";
+import { fetchOnePost } from "../../model/actions/postsAction";
 
 function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -76,27 +77,30 @@ class Post extends React.Component {
 
   componentDidMount() {
     let postID = this.props.match.params.postID;
+    const action = fetchOnePost(postID);
+    this.props.dispatch(action);
 
-    let headers = {
-      "access-token": localStorage.getItem("access-token"),
-      uid: localStorage.getItem("uid"),
-      client: localStorage.getItem("client"),
-    };
-    let requestOptions = {
-      method: "GET",
-      headers: headers,
-      redirect: "follow",
-    };
-    fetch(`https://postify-api.herokuapp.com/posts/${postID}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) =>
-        this.setState({
-          post: result,
-          postID,
-        })
-      )
+    //   let headers = {
+    //     "access-token": localStorage.getItem("access-token"),
+    //     uid: localStorage.getItem("uid"),
+    //     client: localStorage.getItem("client"),
+    //   };
+    //   let requestOptions = {
+    //     method: "GET",
+    //     headers: headers,
+    //     redirect: "follow",
+    //   };
+    //   fetch(`https://postify-api.herokuapp.com/posts/${postID}`, requestOptions)
+    //     .then((response) => response.json())
+    //     .then((result) =>
+    //       this.setState({
+    //         post: result,
+    //         postID,
+    //       })
+    //     )
 
-      .catch((error) => console.log("error", error));
+    //     .catch((error) => console.log("error", error));
+    // }
   }
 
   updatePost = (newPost) => {
@@ -110,7 +114,7 @@ class Post extends React.Component {
         </nav>
 
         <div className="card">
-          {this.state.post ? (
+          {this.props.post ? (
             <>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>
@@ -153,6 +157,7 @@ class Post extends React.Component {
 const mapStateToProps = (state) => {
   return {
     auth: state.loginReducer.isAuth,
+    post: state.postsReducer.post,
   };
 };
 

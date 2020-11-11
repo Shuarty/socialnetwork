@@ -1,7 +1,14 @@
-import { CREATE_POST, FETCH_POSTS, REQUEST_POSTS } from "../types";
+import {
+  CREATE_POST,
+  FETCH_POSTS,
+  REQUEST_POSTS,
+  FETCH_ONE_POST,
+  REQUEST_ONE_POST,
+} from "../types";
 
 let initialState = {
   posts: [],
+  post: [],
 };
 
 const postsReducer = (state = initialState, action) => {
@@ -12,6 +19,10 @@ const postsReducer = (state = initialState, action) => {
       return { ...state };
     case FETCH_POSTS:
       return { ...state, posts: action.payload };
+    case REQUEST_ONE_POST:
+      return { ...state };
+    case FETCH_ONE_POST:
+      return { ...state, post: action.payload };
 
     default:
       return state;

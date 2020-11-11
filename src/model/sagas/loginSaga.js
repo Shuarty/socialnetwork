@@ -36,14 +36,6 @@ async function fetchUser(payload) {
         let uid = el.toString();
         localStorage.setItem("uid", uid);
       }
-      if (i === "firs_name") {
-        let firs_name = el.toString();
-        localStorage.setItem("firs_name", firs_name);
-      }
-      if (i === "last_name") {
-        let last_name = el.toString();
-        localStorage.setItem("last_name", last_name);
-      }
       localStorage.setItem("user_id", result.data.id);
     });
   } catch (e) {

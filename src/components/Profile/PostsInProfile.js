@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 
-import { fetchPost } from "../../model/actions/postsAction";
+import { fetchPosts } from "../../model/actions/postsAction";
 
 export class PostsInProfile extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ export class PostsInProfile extends React.Component {
 
   componentDidMount() {
     if (!this.props.posts.length) {
-      const action = fetchPost();
+      const action = fetchPosts();
       this.props.dispatch(action);
     }
   }

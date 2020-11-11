@@ -1,4 +1,4 @@
-import { CREATE_POST, REQUEST_POSTS } from "../types";
+import { CREATE_POST, REQUEST_POSTS, REQUEST_ONE_POST } from "../types";
 
 export function createPost(post) {
   return {
@@ -7,9 +7,15 @@ export function createPost(post) {
   };
 }
 
-export function fetchPost(postID) {
+export function fetchPosts() {
   return {
     type: REQUEST_POSTS,
+  };
+}
+
+export function fetchOnePost(postID) {
+  return {
+    type: REQUEST_ONE_POST,
     postID: postID,
   };
 }

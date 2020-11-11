@@ -2,7 +2,7 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import { createPost, fetchPost } from "../../model/actions/postsAction";
+import { createPost, fetchPosts } from "../../model/actions/postsAction";
 
 class PostForm extends React.Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class PostForm extends React.Component {
   }
 
   getPosts = async () => {
-    const action = fetchPost();
+    const action = fetchPosts();
     await this.props.dispatch(action);
   };
 
