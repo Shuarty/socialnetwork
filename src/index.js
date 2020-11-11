@@ -14,18 +14,30 @@ import sagasWatcherPost from "./model/sagas/getPostsSaga";
 import sagasWatcherPostAdd from "./model/sagas/addPostSaga";
 import sagasWatcherComments from "./model/sagas/getCommentsSaga";
 import sagasAddComment from "./model/sagas/addCommentSaga";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { PersistGate } from "redux-persist/integration/react";
 
 const saga = createSagaMiddleware();
+
+const persistConfig = {
+  key: "auth",
+  storage,
+  whitelist: ["loginReducer"],
+};
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const history = createBrowserHistory();
 
 export const store = createStore(
-  rootReducer,
+  persistedReducer,
   compose(
     applyMiddleware(saga),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
+
+const persistor = persistStore(store);
 
 saga.run(sagasWatcherUser);
 saga.run(sagasWatcherUserAuth);
@@ -38,7 +50,9 @@ saga.run(sagasAddComment);
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Router>
   </Provider>,
   document.getElementById("root")

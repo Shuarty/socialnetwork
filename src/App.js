@@ -8,26 +8,12 @@ import PostsWrapper from "./components/Posts/PostsWrapper";
 import Post from "./components/Posts/OnePost";
 import { connect } from "react-redux";
 
-const items = {
-  "Access-Token": localStorage.getItem("access-token"),
-  client: localStorage.getItem("client"),
-  uid: localStorage.getItem("uid"),
-  user_id: localStorage.getItem("user_id"),
-};
-
-const redirect =
-  items["Access-Token"] === null ? (
-    <Redirect to="/login" />
-  ) : (
-    <Redirect to="/main" />
-  );
-
 const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
       render={(props) =>
-        props.auth === false ? (
+        props.isAuth === false ? (
           <Redirect to="/login" />
         ) : (
           <Component {...props} />
@@ -39,39 +25,44 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
 const App = (props) => {
   return (
-    <>
-      <Switch>
-        <PrivateRoute path="/main" auth={props.auth} component={MainPage} />
-        <PrivateRoute
-          exact
-          path="/posts/"
-          auth={props.auth}
-          component={PostsWrapper}
-        />
-        <PrivateRoute
-          exact
-          path="/posts/:postID"
-          auth={props.auth}
-          component={Post}
-        />
-        <Route exact auth={props.auth} path="/login" component={LogIn} />
-        <Route exact auth={props.auth} path="/signup" component={SignUp} />
-        <PrivateRoute
-          exact
-          path="/profile"
-          auth={props.auth}
-          component={Profile}
-        />
-
-        {redirect}
-      </Switch>
-    </>
+    <Switch>
+      <PrivateRoute path="/main" auth={props.isAuth} component={MainPage} />
+      <PrivateRoute
+        exact
+        path="/posts/"
+        auth={props.isAuth}
+        component={PostsWrapper}
+      />
+      <PrivateRoute
+        exact
+        path="/posts/:postID"
+        auth={props.isAuth}
+        component={Post}
+      />
+      <Route exact path="/login" component={LogIn} />
+      <Route exact path="/signup" component={SignUp} />
+      <PrivateRoute
+        exact
+        path="/profile"
+        auth={props.isAuth}
+        component={Profile}
+      />
+      <Route
+        render={() =>
+          props.isAuth === true ? (
+            <Redirect to="/main" />
+          ) : (
+            <Redirect to="/login" />
+          )
+        }
+      />
+    </Switch>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.loginReducer.isAuth,
+    isAuth: state.loginReducer.isAuth,
   };
 };
 
