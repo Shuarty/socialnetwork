@@ -6,8 +6,11 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import "./PostsWrapper.css";
+import { logoutUser } from "../../model/actions/loginAction";
+import { connect } from "react-redux";
+import { fetchOnePost } from "../../model/actions/postsAction";
 
-function SimpleMenu() {
+function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -21,6 +24,8 @@ function SimpleMenu() {
   const handleLogout = () => {
     localStorage.clear();
     localStorage.removeItem("user-id");
+    const action = logoutUser();
+    props.dispatch(action);
     setTimeout(setAnchorEl(null), 500);
   };
 
@@ -72,56 +77,60 @@ class Post extends React.Component {
 
   componentDidMount() {
     let postID = this.props.match.params.postID;
+    const action = fetchOnePost(postID);
+    this.props.dispatch(action);
 
-    let headers = {
-      "access-token": localStorage.getItem("access-token"),
-      uid: localStorage.getItem("uid"),
-      client: localStorage.getItem("client"),
-    };
-    let requestOptions = {
-      method: "GET",
-      headers: headers,
-      redirect: "follow",
-    };
-    fetch(`https://postify-api.herokuapp.com/posts/${postID}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) =>
-        this.setState({
-          post: result,
-          postID,
-        })
-      )
+    //   let headers = {
+    //     "access-token": localStorage.getItem("access-token"),
+    //     uid: localStorage.getItem("uid"),
+    //     client: localStorage.getItem("client"),
+    //   };
+    //   let requestOptions = {
+    //     method: "GET",
+    //     headers: headers,
+    //     redirect: "follow",
+    //   };
+    //   fetch(`https://postify-api.herokuapp.com/posts/${postID}`, requestOptions)
+    //     .then((response) => response.json())
+    //     .then((result) =>
+    //       this.setState({
+    //         post: result,
+    //         postID,
+    //       })
+    //     )
 
-      .catch((error) => console.log("error", error));
+    //     .catch((error) => console.log("error", error));
+    // }
   }
 
   updatePost = (newPost) => {
     this.setState({ post: newPost });
   };
   render() {
+    // console.log(this.props, "props one post");
     return (
       <div>
         <nav className="navbar">
-          <SimpleMenu />
+          <SimpleMenu {...this.props} />
         </nav>
 
         <div className="card">
-          {this.state.post ? (
+          {this.props.post ? (
             <>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>
-                  <div className="title">{this.state.post.title}</div>
+                  <div className="title">{this.props.post.title}</div>
 
                   <div className="description">
-                    {this.state.post.description}
+                    {this.props.post.description}
                   </div>
                 </div>
                 <EditModal
-                  post={this.state.post}
+                  post={this.props.post}
                   updatePost={this.updatePost}
                 />
               </div>
-              <Comment postID={this.state.postID} />
+              <Comment postID={this.props.post.id} />
               <div
                 style={{
                   display: "flex",
@@ -130,10 +139,10 @@ class Post extends React.Component {
                   fontSize: 13,
                 }}
               >
-                <div className="id">User ID: {this.state.post.user_id}</div>
+                <div className="id">User ID: {this.props.post.user_id}</div>
                 <div className="created">
                   Created at:
-                  {`${new Date(this.state.post.created_at.toString())}`}
+                  {`${new Date(this.props.post.created_at)}`}
                 </div>
               </div>
             </>
@@ -146,4 +155,11 @@ class Post extends React.Component {
   }
 }
 
-export default Post;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.loginReducer.isAuth,
+    post: state.postsReducer.post,
+  };
+};
+
+export default connect(mapStateToProps, null)(Post);

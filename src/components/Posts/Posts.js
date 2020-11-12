@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 
-import { fetchPost } from "../../model/actions/postsAction";
+import { fetchPosts } from "../../model/actions/postsAction";
 
 class Posts extends React.Component {
   constructor(props) {
@@ -14,13 +14,13 @@ class Posts extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.getFetchedPosts();
+  getFetchedPosts() {
+    const action = fetchPosts();
+    this.props.dispatch(action);
   }
 
-  getFetchedPosts() {
-    const action = fetchPost();
-    this.props.dispatch(action);
+  componentDidMount() {
+    this.getFetchedPosts();
   }
 
   render() {
@@ -42,7 +42,7 @@ class Posts extends React.Component {
 
 class OnePost extends React.Component {
   render() {
-    let date = `${new Date(this.props.post.created_at.toString())}`;
+    let date = `${new Date(this.props.post.created_at)}`;
 
     return (
       <div className="card" key={this.props.post.id}>

@@ -4,10 +4,12 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import "./Profile.css";
+import { logoutUser } from "../../model/actions/loginAction";
+import { connect } from "react-redux";
 
 import PostsInProfile from "./PostsInProfile";
 
-function SimpleMenu() {
+function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -21,6 +23,8 @@ function SimpleMenu() {
   const handleLogout = () => {
     localStorage.clear();
     localStorage.removeItem("user-id");
+    const action = logoutUser();
+    props.dispatch(action);
     setTimeout(setAnchorEl(null), 500);
   };
 
@@ -68,7 +72,7 @@ class Profile extends React.Component {
     return (
       <div>
         <nav className="navbar">
-          <SimpleMenu />
+          <SimpleMenu {...this.props} />
         </nav>
         <div className="wrapper">
           <div className="user">Users email: {this.email}</div>
@@ -80,4 +84,10 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.loginReducer.isAuth,
+  };
+};
+
+export default connect(mapStateToProps, null)(Profile);

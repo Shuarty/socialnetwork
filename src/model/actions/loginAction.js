@@ -1,9 +1,15 @@
-import { FETCH_LOGIN_USER } from "../types";
+import { FETCH_LOGIN_USER, LOGOUT_USER } from "../types";
 
 export function fetchLoginUser(dataUser) {
   return {
-    email: dataUser.email,
-    password: dataUser.password,
+    dataUser,
     type: FETCH_LOGIN_USER,
+  };
+}
+
+export function logoutUser(dataUser) {
+  return {
+    dataUser,
+    type: LOGOUT_USER,
   };
 }

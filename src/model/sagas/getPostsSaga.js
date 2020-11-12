@@ -1,15 +1,15 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { FETCH_POSTS, REQUEST_POSTS } from "../types";
 
-export default function* sagasWatcherPost() {
-  yield takeEvery(REQUEST_POSTS, sagaWorkerPost);
+export default function* sagasWatcherPosts() {
+  yield takeEvery(REQUEST_POSTS, sagaWorkerPosts);
 }
-function* sagaWorkerPost(action) {
+function* sagaWorkerPosts(action) {
   const payload = yield call(fetchPosts);
   yield put({ type: FETCH_POSTS, payload });
 }
 
-async function fetchPosts(postID) {
+async function fetchPosts() {
   try {
     const res = await fetch(`https://postify-api.herokuapp.com/posts`, {
       method: "GET",

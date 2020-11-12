@@ -17,8 +17,8 @@ class LogIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "Jojo@mail.jp",
-      password: "Jojo123321",
+      email: "",
+      password: "",
     };
     this.handleSubmitForm = this.handleSubmitForm.bind(this);
     this.handleChangeInput = this.handleChangeInput.bind(this);
@@ -41,10 +41,6 @@ class LogIn extends React.Component {
       password: this.state.password,
     });
     this.props.dispatch(action);
-
-    setTimeout(function () {
-      window.location.href = "/MainPage";
-    }, 1000);
   };
 
   render() {

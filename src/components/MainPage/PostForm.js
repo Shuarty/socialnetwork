@@ -2,7 +2,7 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import { createPost, fetchPost } from "../../model/actions/postsAction";
+import { createPost, fetchPosts } from "../../model/actions/postsAction";
 
 class PostForm extends React.Component {
   constructor(props) {
@@ -16,14 +16,12 @@ class PostForm extends React.Component {
     this.handleChangeInput = this.handleChangeInput.bind(this);
   }
 
-  handlerSubmit = () => {
-    const action = fetchPost();
-    this.props.dispatch(action);
+  getPosts = async () => {
+    const action = fetchPosts();
+    await this.props.dispatch(action);
   };
 
-  submitHandler = (event) => {
-    event.preventDefault();
-
+  addPost = async () => {
     const { title } = this.state;
     const { description } = this.state;
 
@@ -31,13 +29,16 @@ class PostForm extends React.Component {
       title,
       description,
     };
-
     const action = createPost(newPost);
-    this.props.dispatch(action);
+    await this.props.dispatch(action);
+  };
+
+  submitHandler = (event) => {
+    this.addPost().then(setTimeout(this.getPosts, 500));
 
     this.setState({ title: "", description: "" });
 
-    this.handlerSubmit();
+    event.preventDefault();
   };
 
   handleChangeInput = (event) => {

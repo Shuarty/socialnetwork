@@ -7,11 +7,12 @@ import "./MainPage.css";
 import PostForm from "./PostForm";
 import PostsInMain from "./PostsInMain";
 import { fetchGetComments } from "../../model/actions/commentAction";
-import { fetchPost } from "../../model/actions/postsAction";
-
+import { fetchPosts } from "../../model/actions/postsAction";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { logoutUser } from "../../model/actions/loginAction";
 
-function SimpleMenu() {
+function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -25,9 +26,10 @@ function SimpleMenu() {
   const handleLogout = () => {
     localStorage.clear();
     localStorage.removeItem("user-id");
+    const action = logoutUser();
+    props.dispatch(action);
     setTimeout(setAnchorEl(null), 500);
   };
-
   return (
     <div>
       <Button
@@ -66,24 +68,23 @@ function SimpleMenu() {
 }
 
 class MainPage extends React.Component {
-  getComment = () => {
+  getComment = async () => {
     const action = fetchGetComments();
-    this.props.dispatch(action);
+    await this.props.dispatch(action);
   };
-  getPosts = () => {
-    const action = fetchPost();
-    this.props.dispatch(action);
+  getPosts = async () => {
+    const action = fetchPosts();
+    await this.props.dispatch(action);
   };
   componentDidMount() {
-    this.getPosts();
-    this.getComment();
+    this.getPosts().then(this.getComment());
   }
 
   render() {
     return (
       <div>
         <nav className="navbar">
-          <SimpleMenu />
+          <SimpleMenu {...this.props} />
         </nav>
         <div className="wrapper">
           <PostForm />
@@ -99,7 +100,8 @@ class MainPage extends React.Component {
 const mapStateToProps = (state) => {
   return {
     posts: state.postsReducer.posts,
+    auth: state.loginReducer.isAuth,
   };
 };
 
-export default connect(mapStateToProps, null)(MainPage);
+export default withRouter(connect(mapStateToProps, null)(MainPage));
