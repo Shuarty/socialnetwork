@@ -5,12 +5,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import "./MainPage.css";
 import PostForm from "./PostForm";
-import PostsInMain from "./PostsInMain";
-import { fetchGetComments } from "../../model/actions/commentAction";
-import { fetchPosts } from "../../model/actions/postsAction";
+// import { fetchGetComments } from "../../model/actions/commentAction";
+// import { fetchPosts } from "../../model/actions/postsAction";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../model/actions/loginAction";
+import AllPosts from "../Posts/AllPosts";
 
 function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -68,17 +68,17 @@ function SimpleMenu(props) {
 }
 
 class MainPage extends React.Component {
-  getComment = async () => {
-    const action = fetchGetComments();
-    await this.props.dispatch(action);
-  };
-  getPosts = async () => {
-    const action = fetchPosts();
-    await this.props.dispatch(action);
-  };
-  componentDidMount() {
-    this.getPosts().then(this.getComment());
-  }
+  // getComment = async () => {
+  //   const action = fetchGetComments();
+  //   await this.props.dispatch(action);
+  // };
+  // getPosts = async () => {
+  //   const action = fetchPosts();
+  //   await this.props.dispatch(action);
+  // };
+  // componentDidMount() {
+  //   this.getPosts().then(this.getComment());
+  // }
 
   render() {
     return (
@@ -91,7 +91,7 @@ class MainPage extends React.Component {
           <div className="totalposts">
             Total posts: {this.props.posts.length}
           </div>
-          <PostsInMain />
+          <AllPosts />
         </div>
       </div>
     );

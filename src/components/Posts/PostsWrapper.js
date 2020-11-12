@@ -7,7 +7,9 @@ import "./PostsWrapper.css";
 import { connect } from "react-redux";
 import { logoutUser } from "../../model/actions/loginAction";
 
-import Posts from "./Posts";
+import AllPosts from "./AllPosts";
+
+// import Posts from "./Posts";
 
 function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -76,7 +78,8 @@ class PostsWrapper extends React.Component {
           <div className="totalposts">
             Total posts: {this.props.posts.length}
           </div>
-          <Posts />
+          {/* <Posts /> */}
+          <AllPosts />
         </div>
       </div>
     );

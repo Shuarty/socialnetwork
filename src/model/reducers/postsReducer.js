@@ -11,6 +11,7 @@ import {
 let initialState = {
   posts: [],
   post: [],
+  countPages: null,
 };
 
 const postsReducer = (state = initialState, action) => {
@@ -20,7 +21,11 @@ const postsReducer = (state = initialState, action) => {
     case REQUEST_POSTS:
       return { ...state };
     case FETCH_POSTS:
-      return { ...state, posts: action.payload };
+      return {
+        ...state,
+        posts: action.payload,
+        countPages: Math.ceil(action.payload.length / 10),
+      };
     case REQUEST_ONE_POST:
       return { ...state };
     case FETCH_ONE_POST:

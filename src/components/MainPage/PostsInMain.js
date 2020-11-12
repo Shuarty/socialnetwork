@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import BasicPagination from "../Pagination";
 import { connect } from "react-redux";
+import { fetchPosts } from "../../model/actions/postsAction";
 
 export class PostsInMain extends React.Component {
   constructor(props) {
@@ -9,8 +10,34 @@ export class PostsInMain extends React.Component {
 
     this.state = {
       posts: [],
+      page: 1,
+      noOfPages: 1,
     };
+    this.itemsPerPage = 10;
+
+    this.handleChange = this.handleChange.bind(this);
   }
+
+  // getFetchedPosts = async () => {
+  //   const action = fetchPosts();
+  //   await this.props.dispatch(action);
+  // };
+
+  // componentDidMount() {
+  //   this.getFetchedPosts();
+  // }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.posts.length !== prevProps.posts.length) {
+      this.setState({
+        noOfPages: Math.ceil(this.props.posts.length / this.itemsPerPage),
+      });
+    }
+  }
+
+  handleChange = (event, value) => {
+    this.setState({ page: value });
+  };
 
   render() {
     const posts = this.props.posts;
@@ -21,9 +48,26 @@ export class PostsInMain extends React.Component {
     });
     return (
       <>
-        {dateSortedposts.map((post) => {
-          return <PostInMain post={post} key={post.id} {...this.props} />;
-        })}
+        {dateSortedposts
+          .slice(
+            (this.state.page - 1) * this.itemsPerPage,
+            this.state.page * this.itemsPerPage
+          )
+          .map((post) => {
+            return <PostInMain post={post} key={post.id} {...this.props} />;
+          })}
+        <div className="pagination">
+          <BasicPagination
+            count={this.state.noOfPages}
+            page={this.state.page}
+            onChange={this.handleChange}
+            defaultPage={1}
+            color="primary"
+            size="large"
+            showFirstButton
+            showLastButton
+          />
+        </div>
       </>
     );
   }

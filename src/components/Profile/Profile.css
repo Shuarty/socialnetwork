@@ -62,3 +62,8 @@
   padding-top: 30px;
   text-align: center;
 }
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+}
