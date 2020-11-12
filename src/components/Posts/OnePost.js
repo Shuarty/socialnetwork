@@ -107,6 +107,7 @@ class Post extends React.Component {
     this.setState({ post: newPost });
   };
   render() {
+    // console.log(this.props, "props one post");
     return (
       <div>
         <nav className="navbar">
@@ -118,18 +119,18 @@ class Post extends React.Component {
             <>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>
-                  <div className="title">{this.state.post.title}</div>
+                  <div className="title">{this.props.post.title}</div>
 
                   <div className="description">
-                    {this.state.post.description}
+                    {this.props.post.description}
                   </div>
                 </div>
                 <EditModal
-                  post={this.state.post}
+                  post={this.props.post}
                   updatePost={this.updatePost}
                 />
               </div>
-              <Comment postID={this.state.postID} />
+              <Comment postID={this.props.post.id} />
               <div
                 style={{
                   display: "flex",
@@ -138,10 +139,10 @@ class Post extends React.Component {
                   fontSize: 13,
                 }}
               >
-                <div className="id">User ID: {this.state.post.user_id}</div>
+                <div className="id">User ID: {this.props.post.user_id}</div>
                 <div className="created">
                   Created at:
-                  {`${new Date(this.state.post.created_at.toString())}`}
+                  {`${new Date(this.props.post.created_at)}`}
                 </div>
               </div>
             </>

@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { changePost } from "../../model/actions/postsAction";
+import { connect } from "react-redux";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -30,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EditModal(props) {
+function EditModal(props) {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
@@ -50,40 +52,24 @@ export default function EditModal(props) {
     setOpen(false);
   };
 
-  const fetchChangePost = async (postID, data) => {
-    try {
-      const res = await fetch(
-        `https://postify-api.herokuapp.com/posts/${postID}`,
-        {
-          method: "PUT",
-          headers: {
-            "Access-Token": localStorage.getItem("access-token"),
-            client: localStorage.getItem("client"),
-            uid: localStorage.getItem("uid"),
-            "Content-Type": "application/json;charset=utf-8",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-      const newPost = await res.json();
-      props.updatePost(newPost);
-      handleClose();
-    } catch (err) {
-      console.log("error:", err.message);
-      handleClose();
-    }
-  };
-
-  const submitHandler = (event) => {
-    event.preventDefault();
+  const changePostredux = async () => {
+    const postID = props.post.id;
     const newPost = {
       title: post.title,
       description: post.description,
     };
+    const action = changePost(postID, newPost);
+    await props.dispatch(action);
+  };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
 
     props.post.user_id === +localStorage.getItem("user_id")
-      ? fetchChangePost(props.post.id, newPost)
+      ? changePostredux()
       : console.error("You can't change another guy's post, stop it, dude.");
+
+    handleClose();
   };
 
   const handleChangeTitle = (event) => {
@@ -136,6 +122,7 @@ export default function EditModal(props) {
     </div>
   );
 
+  // console.log(props, "modal props");
   return (
     <div>
       <button type="button" onClick={handleOpen}>
@@ -152,3 +139,5 @@ export default function EditModal(props) {
     </div>
   );
 }
+
+export default connect(null, null)(EditModal);

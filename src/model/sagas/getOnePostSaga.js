@@ -5,6 +5,7 @@ export default function* sagasWatcherOnePost() {
   yield takeEvery(REQUEST_ONE_POST, sagaWorkerOnePost);
 }
 function* sagaWorkerOnePost(action) {
+  // console.log(action, "action in saga");
   const payload = yield call(fetchOnePost, action.postID);
   yield put({ type: FETCH_ONE_POST, payload });
 }

@@ -4,6 +4,8 @@ import {
   REQUEST_POSTS,
   FETCH_ONE_POST,
   REQUEST_ONE_POST,
+  REQUEST_CHANGE_POST,
+  CHANGE_POST,
 } from "../types";
 
 let initialState = {
@@ -22,6 +24,10 @@ const postsReducer = (state = initialState, action) => {
     case REQUEST_ONE_POST:
       return { ...state };
     case FETCH_ONE_POST:
+      return { ...state, post: action.payload };
+    case REQUEST_CHANGE_POST:
+      return { ...state };
+    case CHANGE_POST:
       return { ...state, post: action.payload };
 
     default:
