@@ -81,15 +81,19 @@ class Post extends React.Component {
     return result;
   };
 
+  getPosts = async () => {
+    if (!!this.props.isFiltered) {
+      this.props.dispatch(fetchFilteredPosts());
+    } else {
+      this.props.dispatch(fetchPosts());
+    }
+  };
   deletePostRedux = async () => {
     const postID = this.props.post.id;
     const action = deletePost(postID);
     await this.props.dispatch(action);
-    if (this.props.isFiltered) {
-      await this.props.dispatch(fetchFilteredPosts());
-    } else {
-      await this.props.dispatch(fetchPosts());
-    }
+
+    await this.getPosts();
   };
 
   deleteHandler = () => {
@@ -129,6 +133,7 @@ class Post extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    posts: state.postsReducer.posts,
     countPages: state.postsReducer.countPages,
   };
 };

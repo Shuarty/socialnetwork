@@ -22,6 +22,10 @@ const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_POST:
       return { posts: state.posts.concat(action.payload), ...state };
+    case REQUEST_DELETE_POST:
+      return { ...state };
+    case DELETE_POST:
+      return { post: action.payload, ...state };
     case REQUEST_POSTS:
       return { ...state };
     case FETCH_POSTS:
@@ -53,11 +57,6 @@ const postsReducer = (state = initialState, action) => {
       return { ...state };
     case CHANGE_POST:
       return { ...state, post: action.payload };
-
-    case REQUEST_DELETE_POST:
-      return { ...state };
-    case DELETE_POST:
-      return { post: action.payload, ...state };
 
     default:
       return state;
