@@ -41,7 +41,7 @@ class PostsWrapper extends React.Component {
             Total posts: {this.props.posts.length}
           </div>
 
-          <AllPosts {...this.props} />
+          <AllPosts isFiltered={false} {...this.props} />
         </div>
       </div>
     );

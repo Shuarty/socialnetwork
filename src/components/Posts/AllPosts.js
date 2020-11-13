@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import BasicPagination from "../Pagination";
 import { connect } from "react-redux";
 import Loader from "../Spinner";
+import {
+  deletePost,
+  fetchPosts,
+  fetchFilteredPosts,
+} from "../../model/actions/postsAction";
 
 export class AllPosts extends React.Component {
   constructor(props) {
@@ -63,9 +68,34 @@ export class AllPosts extends React.Component {
 }
 
 class Post extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      post: [],
+    };
+    this.deleteHandler = this.deleteHandler.bind(this);
+  }
+
   filteredComments = (arr, id) => {
     const result = arr.filter((comment) => comment.commentable_id === +id);
     return result;
+  };
+
+  deletePostRedux = async () => {
+    const postID = this.props.post.id;
+    const action = deletePost(postID);
+    await this.props.dispatch(action);
+    if (this.props.isFiltered) {
+      await this.props.dispatch(fetchFilteredPosts());
+    } else {
+      await this.props.dispatch(fetchPosts());
+    }
+  };
+
+  deleteHandler = () => {
+    this.props.post.user_id === +localStorage.getItem("user_id")
+      ? this.deletePostRedux()
+      : console.error("You can't delete another guy's post, stop it, dude.");
   };
 
   render() {
@@ -73,9 +103,12 @@ class Post extends React.Component {
 
     return (
       <div className="card" key={this.props.post.id}>
-        <Link to={`/posts/${this.props.post.id}`}>
-          <div className="title">{this.props.post.title}</div>
-        </Link>
+        <div className="in-post-flex">
+          <Link to={`/posts/${this.props.post.id}`}>
+            <div className="title">{this.props.post.title}</div>
+          </Link>
+          <button onClick={this.deleteHandler}>Delete post</button>
+        </div>
         <div className="description">{this.props.post.description}</div>
 
         <div className="comments-counter">

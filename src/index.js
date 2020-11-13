@@ -17,6 +17,8 @@ import sagasWatcherComments from "./model/sagas/getCommentsSaga";
 import sagasAddComment from "./model/sagas/addCommentSaga";
 import sagasWatcherChangePost from "./model/sagas/changePostSaga";
 import sagasWatcherFilteredPosts from "./model/sagas/getFilteredPostsSaga";
+import sagasWatcherDeletePost from "./model/sagas/deletePostSaga";
+
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
@@ -50,6 +52,7 @@ saga.run(sagasWatcherOnePost);
 saga.run(sagasWatcherPostAdd);
 saga.run(sagasWatcherComments);
 saga.run(sagasWatcherChangePost);
+saga.run(sagasWatcherDeletePost);
 saga.run(sagasAddComment);
 
 ReactDOM.render(

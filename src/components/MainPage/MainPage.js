@@ -44,7 +44,7 @@ class MainPage extends React.Component {
           <div className="totalposts">
             Total posts: {this.props.posts.length}
           </div>
-          <AllPosts {...this.props} />
+          <AllPosts isFiltered={false} {...this.props} />
         </div>
       </div>
     );

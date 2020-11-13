@@ -6,7 +6,6 @@ const initialState = {
 };
 
 const loginReducer = (state = initialState, action) => {
-  // console.log(localStorage.getItem("access-token"));
   switch (action.type) {
     case FETCH_LOGIN_USER:
       return { ...state };

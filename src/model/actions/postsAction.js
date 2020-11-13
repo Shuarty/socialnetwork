@@ -4,6 +4,7 @@ import {
   REQUEST_ONE_POST,
   REQUEST_CHANGE_POST,
   REQUEST_FILTERED_POSTS,
+  REQUEST_DELETE_POST,
 } from "../types";
 
 export function createPost(post) {
@@ -37,5 +38,12 @@ export function changePost(postID, post) {
     type: REQUEST_CHANGE_POST,
     postID: postID,
     payload: post,
+  };
+}
+
+export function deletePost(postID) {
+  return {
+    type: REQUEST_DELETE_POST,
+    postID: postID,
   };
 }

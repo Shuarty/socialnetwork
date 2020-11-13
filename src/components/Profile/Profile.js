@@ -31,8 +31,10 @@ class Profile extends React.Component {
         <NavBar />
         <div className="wrapper">
           <div className="user">Users email: {this.email}</div>
-
-          <AllPosts {...this.props} />
+          <div className="totalposts">
+            Total posts: {this.props.posts.length}
+          </div>
+          <AllPosts isFiltered={true} {...this.props} />
         </div>
       </div>
     );

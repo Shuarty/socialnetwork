@@ -8,6 +8,8 @@ import {
   REQUEST_ONE_POST,
   REQUEST_CHANGE_POST,
   CHANGE_POST,
+  DELETE_POST,
+  REQUEST_DELETE_POST,
 } from "../types";
 
 let initialState = {
@@ -51,6 +53,11 @@ const postsReducer = (state = initialState, action) => {
       return { ...state };
     case CHANGE_POST:
       return { ...state, post: action.payload };
+
+    case REQUEST_DELETE_POST:
+      return { ...state };
+    case DELETE_POST:
+      return { post: action.payload, ...state };
 
     default:
       return state;
