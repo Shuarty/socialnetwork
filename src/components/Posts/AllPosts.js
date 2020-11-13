@@ -85,14 +85,7 @@ class Post extends React.Component {
               .length
           }
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            paddingTop: 20,
-            fontSize: 13,
-          }}
-        >
+        <div className="in-onepost">
           <div className="id">User ID: {this.props.post.user_id}</div>
           <div className="created">Created at: {date}</div>
         </div>

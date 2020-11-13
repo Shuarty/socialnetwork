@@ -6,18 +6,11 @@ import Button from "@material-ui/core/Button";
 import { changePost } from "../../model/actions/postsAction";
 import { connect } from "react-redux";
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
   return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
+    top: `50%`,
+    left: `50%`,
+    transform: `translate(-50%, -50%)`,
   };
 }
 
@@ -106,15 +99,14 @@ function EditModal(props) {
           label="Type your description"
           variant="outlined"
           className="input-post"
-          style={{ marginTop: 10 }}
           onChange={handleChangeDescription}
           value={post.description}
         />
         <Button
+          id="modal-save"
           onClick={submitHandler}
           variant="contained"
           color="primary"
-          style={{ marginTop: 10, width: "100%" }}
         >
           Save changes
         </Button>

@@ -44,16 +44,16 @@ export class CommentForm extends React.Component {
 
     const action = fetchComment(newComment);
     await this.props.dispatch(action);
+    await this.getComment();
   };
 
   submitComment(event) {
-    this.addComment().then(setTimeout(this.getComment, 500));
+    event.preventDefault();
+    this.addComment();
 
     this.setState({
       message: "",
     });
-
-    event.preventDefault();
   }
 
   render() {

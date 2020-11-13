@@ -2,7 +2,7 @@ import React from "react";
 import Comment from "./Comment";
 import EditModal from "./Modal";
 import NavBar from "../NavBar";
-import "./PostsWrapper.css";
+import "./Posts.css";
 
 import { connect } from "react-redux";
 import { fetchOnePost } from "../../model/actions/postsAction";
@@ -68,7 +68,6 @@ class Post extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.loginReducer.isAuth,
     post: state.postsReducer.post,
   };
 };

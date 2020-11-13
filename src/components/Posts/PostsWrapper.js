@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import "./PostsWrapper.css";
+import "./Posts.css";
 import { connect } from "react-redux";
 import { fetchGetComments } from "../../model/actions/commentAction";
 import { fetchPosts } from "../../model/actions/postsAction";

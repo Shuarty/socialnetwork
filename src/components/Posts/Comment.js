@@ -39,9 +39,9 @@ class Comment extends React.Component {
     this.clickHandler = this.clickHandler.bind(this);
   }
 
-  getComments = async () => {
+  getComments = () => {
     const action = fetchGetComments();
-    await this.props.dispatch(action);
+    this.props.dispatch(action);
   };
 
   clickHandler = () => {

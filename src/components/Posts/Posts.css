@@ -14,17 +14,6 @@
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
-.form-post {
-  margin: 0 auto;
-  max-width: 800px;
-  padding: 20px 0;
-}
-
-.input-post {
-  background-color: #fff;
-  width: 100%;
-}
-
 .title {
   font-size: 25px;
   margin-bottom: 5px;
@@ -68,4 +57,8 @@
 .in-post-flex {
   display: flex;
   justify-content: space-between;
+}
+
+#modal-save {
+  width: 100%;
 }

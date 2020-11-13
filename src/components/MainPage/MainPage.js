@@ -56,7 +56,6 @@ const mapStateToProps = (state) => {
     posts: state.postsReducer.posts,
     comments: state.commentReducer.comments,
     countPages: state.postsReducer.countPages,
-    auth: state.loginReducer.isAuth,
   };
 };
 

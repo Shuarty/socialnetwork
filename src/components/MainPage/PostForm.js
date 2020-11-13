@@ -36,11 +36,10 @@ class PostForm extends React.Component {
   };
 
   submitHandler = (event) => {
+    event.preventDefault();
     this.addPost();
 
     this.setState({ title: "", description: "" });
-
-    event.preventDefault();
   };
 
   handleChangeInput = (event) => {
