@@ -1,12 +1,3 @@
-.navbar {
-  width: 100%;
-  height: 50px;
-  background-color: blue;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
 .wrapper {
   max-width: 1260px;
   margin: 0 auto;
@@ -60,4 +51,24 @@
 
 .totalposts {
   text-align: center;
+}
+
+.form-post {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 20px 0;
+}
+
+.MuiFormControl-root {
+  margin-bottom: 10px !important;
+  background-color: white !important;
+}
+
+.input-post {
+  background-color: #fff;
+  width: 100%;
+}
+
+#submit-button {
+  width: 100%;
 }

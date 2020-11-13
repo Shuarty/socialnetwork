@@ -2,6 +2,8 @@ import {
   CREATE_POST,
   FETCH_POSTS,
   REQUEST_POSTS,
+  REQUEST_FILTERED_POSTS,
+  FETCH_FILTERED_POSTS,
   FETCH_ONE_POST,
   REQUEST_ONE_POST,
   REQUEST_CHANGE_POST,
@@ -25,6 +27,21 @@ const postsReducer = (state = initialState, action) => {
         ...state,
         posts: action.payload,
         countPages: Math.ceil(action.payload.length / 10),
+      };
+
+    case REQUEST_FILTERED_POSTS:
+      return { ...state };
+    case FETCH_FILTERED_POSTS:
+      return {
+        ...state,
+        posts: action.payload.filter(
+          (post) => post.user_id === +localStorage.getItem("user_id")
+        ),
+        countPages: Math.ceil(
+          action.payload.filter(
+            (post) => post.user_id === +localStorage.getItem("user_id")
+          ).length / 10
+        ),
       };
     case REQUEST_ONE_POST:
       return { ...state };

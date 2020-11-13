@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import BasicPagination from "../Pagination";
 import { connect } from "react-redux";
-import { fetchPosts } from "../../model/actions/postsAction";
+import Loader from "../Spinner";
 
 export class AllPosts extends React.Component {
   constructor(props) {
@@ -11,20 +11,11 @@ export class AllPosts extends React.Component {
     this.state = {
       posts: [],
       page: 1,
-      noOfPages: null,
+      countPages: null,
     };
     this.itemsPerPage = 10;
 
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  getFetchedPosts = () => {
-    const action = fetchPosts();
-    this.props.dispatch(action);
-  };
-
-  componentDidMount() {
-    this.getFetchedPosts();
   }
 
   handleChange = (event, value) => {
@@ -40,26 +31,32 @@ export class AllPosts extends React.Component {
     });
     return (
       <>
-        {dateSortedposts
-          .slice(
-            (this.state.page - 1) * this.itemsPerPage,
-            this.state.page * this.itemsPerPage
-          )
-          .map((post) => {
-            return <Post post={post} key={post.id} {...this.props} />;
-          })}
-        <div className="pagination">
-          <BasicPagination
-            count={this.props.countPages}
-            page={this.state.page}
-            onChange={this.handleChange}
-            defaultPage={1}
-            color="primary"
-            size="large"
-            showFirstButton
-            showLastButton
-          />
-        </div>
+        {this.props.posts.length ? (
+          <>
+            {dateSortedposts
+              .slice(
+                (this.state.page - 1) * this.itemsPerPage,
+                this.state.page * this.itemsPerPage
+              )
+              .map((post) => {
+                return <Post post={post} key={post.id} {...this.props} />;
+              })}
+            <div className="pagination">
+              <BasicPagination
+                count={this.props.countPages}
+                page={this.state.page}
+                onChange={this.handleChange}
+                defaultPage={1}
+                color="primary"
+                size="large"
+                showFirstButton
+                showLastButton
+              />
+            </div>
+          </>
+        ) : (
+          <Loader />
+        )}
       </>
     );
   }
@@ -106,9 +103,7 @@ class Post extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.postsReducer.posts,
     countPages: state.postsReducer.countPages,
-    comments: state.commentReducer.comments,
   };
 };
 

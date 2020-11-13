@@ -122,7 +122,6 @@ function EditModal(props) {
     </div>
   );
 
-  // console.log(props, "modal props");
   return (
     <div>
       <button type="button" onClick={handleOpen}>

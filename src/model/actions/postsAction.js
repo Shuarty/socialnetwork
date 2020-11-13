@@ -3,6 +3,7 @@ import {
   REQUEST_POSTS,
   REQUEST_ONE_POST,
   REQUEST_CHANGE_POST,
+  REQUEST_FILTERED_POSTS,
 } from "../types";
 
 export function createPost(post) {
@@ -15,6 +16,12 @@ export function createPost(post) {
 export function fetchPosts() {
   return {
     type: REQUEST_POSTS,
+  };
+}
+
+export function fetchFilteredPosts() {
+  return {
+    type: REQUEST_FILTERED_POSTS,
   };
 }
 

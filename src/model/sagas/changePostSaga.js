@@ -5,7 +5,6 @@ export default function* sagasWatcherChangePost() {
   yield takeEvery(REQUEST_CHANGE_POST, sagaWorkerChangePost);
 }
 function* sagaWorkerChangePost(action) {
-  console.log(action, "action in saga");
   const dataPost = action.payload;
   const postID = action.postID;
   const payload = yield call(ChangePost, postID, dataPost);
