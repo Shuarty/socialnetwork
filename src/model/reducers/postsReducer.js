@@ -1,5 +1,6 @@
 import {
-  CREATE_POST,
+  REQUEST_CREATE_POST,
+  CREATE_POST_ADD,
   FETCH_POSTS,
   REQUEST_POSTS,
   REQUEST_FILTERED_POSTS,
@@ -20,12 +21,17 @@ let initialState = {
 
 const postsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_POST:
-      return { posts: state.posts.concat(action.payload), ...state };
+    case REQUEST_CREATE_POST:
+      return { ...state };
+    case CREATE_POST_ADD:
+      return { ...state, posts: state.posts.concat(action.payload) };
     case REQUEST_DELETE_POST:
       return { ...state };
     case DELETE_POST:
-      return { post: action.payload, ...state };
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post.id !== action.payload),
+      };
     case REQUEST_POSTS:
       return { ...state };
     case FETCH_POSTS:

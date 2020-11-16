@@ -3,11 +3,7 @@ import { Link } from "react-router-dom";
 import BasicPagination from "../Pagination";
 import { connect } from "react-redux";
 import Loader from "../Spinner";
-import {
-  deletePost,
-  fetchPosts,
-  fetchFilteredPosts,
-} from "../../model/actions/postsAction";
+import { deletePost } from "../../model/actions/postsAction";
 
 export class AllPosts extends React.Component {
   constructor(props) {
@@ -81,25 +77,16 @@ class Post extends React.Component {
     return result;
   };
 
-  getPosts = async () => {
-    if (!!this.props.isFiltered) {
-      this.props.dispatch(fetchFilteredPosts());
-    } else {
-      this.props.dispatch(fetchPosts());
-    }
-  };
   deletePostRedux = async () => {
     const postID = this.props.post.id;
     const action = deletePost(postID);
     await this.props.dispatch(action);
-
-    await this.getPosts();
   };
 
   deleteHandler = () => {
     this.props.post.user_id === +localStorage.getItem("user_id")
       ? this.deletePostRedux()
-      : console.error("You can't delete another guy's post, stop it, dude.");
+      : alert("You can't delete another guy's post, stop it, dude.");
   };
 
   render() {

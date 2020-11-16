@@ -13,19 +13,16 @@ function* sagaWorkerDeletePost(action) {
 
 async function deletePost(postID) {
   try {
-    const res = await fetch(
-      `https://postify-api.herokuapp.com/posts/${postID}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Access-Token": localStorage.getItem("access-token"),
-          client: localStorage.getItem("client"),
-          uid: localStorage.getItem("uid"),
-          "Content-Type": "application/json;charset=utf-8",
-        },
-      }
-    );
-    return res.status;
+    await fetch(`https://postify-api.herokuapp.com/posts/${postID}`, {
+      method: "DELETE",
+      headers: {
+        "Access-Token": localStorage.getItem("access-token"),
+        client: localStorage.getItem("client"),
+        uid: localStorage.getItem("uid"),
+        "Content-Type": "application/json;charset=utf-8",
+      },
+    });
+    return postID;
   } catch (err) {
     console.log("error:", err.message);
   }

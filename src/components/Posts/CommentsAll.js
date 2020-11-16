@@ -19,12 +19,6 @@ class CommentsAll extends React.Component {
     this.getComment();
   }
 
-  componentDidUpdate(prevProps) {
-    if (!this.props.comments === prevProps.comments) {
-      this.getComment();
-    }
-  }
-
   filteredComments = (arr, id) => {
     const result = arr
       .filter((comment) => comment.commentable_id === +id)

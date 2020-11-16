@@ -1,7 +1,6 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { CREATE_COMMENT, CREATE_COMMENT_ADD } from "../types";
 
-//LOADING POSTS
 export default function* sagasWatcherCommentAdd() {
   yield takeEvery(CREATE_COMMENT, sagaWorkerCommentAdd);
 }

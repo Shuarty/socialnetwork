@@ -17,10 +17,10 @@ class PostForm extends React.Component {
     this.handleChangeInput = this.handleChangeInput.bind(this);
   }
 
-  getPosts = async () => {
-    const action = fetchPosts();
-    await this.props.dispatch(action);
-  };
+  // getPosts = async () => {
+  //   const action = fetchPosts();
+  //   await this.props.dispatch(action);
+  // };
 
   addPost = async () => {
     const { title } = this.state;
@@ -32,7 +32,7 @@ class PostForm extends React.Component {
     };
     const action = createPost(newPost);
     await this.props.dispatch(action);
-    await this.getPosts();
+    // await this.getPosts();
   };
 
   submitHandler = (event) => {

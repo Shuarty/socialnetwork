@@ -1,10 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {
-  fetchComment,
-  fetchGetComments,
-} from "../../model/actions/commentAction";
+import { fetchComment } from "../../model/actions/commentAction";
 import { connect } from "react-redux";
 
 export class CommentForm extends React.Component {
@@ -30,11 +27,6 @@ export class CommentForm extends React.Component {
     }));
   };
 
-  getComment = async () => {
-    const action = fetchGetComments();
-    await this.props.dispatch(action);
-  };
-
   addComment = async () => {
     const newComment = {
       message: this.state.message,
@@ -44,7 +36,6 @@ export class CommentForm extends React.Component {
 
     const action = fetchComment(newComment);
     await this.props.dispatch(action);
-    await this.getComment();
   };
 
   submitComment(event) {
