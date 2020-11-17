@@ -62,3 +62,13 @@
 #modal-save {
   width: 100%;
 }
+
+.delete-text {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-post-delete {
+  display: flex;
+  justify-content: space-around;
+}

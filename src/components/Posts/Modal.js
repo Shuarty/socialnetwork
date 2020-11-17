@@ -60,7 +60,7 @@ function EditModal(props) {
 
     props.post.user_id === +localStorage.getItem("user_id")
       ? changePostredux()
-      : alert("You can't change another guy's post, stop it, dude.");
+      : alert("Вы не можете изменить чужой пост");
 
     handleClose();
   };

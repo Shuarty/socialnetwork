@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import BasicPagination from "../Pagination";
 import { connect } from "react-redux";
 import Loader from "../Spinner";
-import { deletePost } from "../../model/actions/postsAction";
+
+import DeleteModal from "./DeleteModal";
 
 export class AllPosts extends React.Component {
   constructor(props) {
@@ -69,24 +70,11 @@ class Post extends React.Component {
     this.state = {
       post: [],
     };
-    this.deleteHandler = this.deleteHandler.bind(this);
   }
 
   filteredComments = (arr, id) => {
     const result = arr.filter((comment) => comment.commentable_id === +id);
     return result;
-  };
-
-  deletePostRedux = async () => {
-    const postID = this.props.post.id;
-    const action = deletePost(postID);
-    await this.props.dispatch(action);
-  };
-
-  deleteHandler = () => {
-    this.props.post.user_id === +localStorage.getItem("user_id")
-      ? this.deletePostRedux()
-      : alert("You can't delete another guy's post, stop it, dude.");
   };
 
   render() {
@@ -98,7 +86,8 @@ class Post extends React.Component {
           <Link to={`/posts/${this.props.post.id}`}>
             <div className="title">{this.props.post.title}</div>
           </Link>
-          <button onClick={this.deleteHandler}>Delete post</button>
+
+          <DeleteModal {...this.props} />
         </div>
         <div className="description">{this.props.post.description}</div>
 
