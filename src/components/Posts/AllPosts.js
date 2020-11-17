@@ -39,26 +39,41 @@ export class AllPosts extends React.Component {
           <Loader />
         ) : (
           <>
-            {dateSortedposts
-              .slice(
-                (this.state.page - 1) * this.itemsPerPage,
-                this.state.page * this.itemsPerPage
-              )
-              .map((post) => {
-                return <Post post={post} key={post.id} {...this.props} />;
-              })}
-            <div className="pagination">
-              <BasicPagination
-                count={this.props.countPages}
-                page={this.state.page}
-                onChange={this.handleChange}
-                defaultPage={1}
-                color="primary"
-                size="large"
-                showFirstButton
-                showLastButton
-              />
-            </div>
+            {this.props.posts.length > 0 ? (
+              <>
+                {dateSortedposts
+                  .slice(
+                    (this.state.page - 1) * this.itemsPerPage,
+                    this.state.page * this.itemsPerPage
+                  )
+                  .map((post) => {
+                    return <Post post={post} key={post.id} {...this.props} />;
+                  })}
+                <div className="pagination">
+                  <BasicPagination
+                    count={this.props.countPages}
+                    page={this.state.page}
+                    onChange={this.handleChange}
+                    defaultPage={1}
+                    color="primary"
+                    size="large"
+                    showFirstButton
+                    showLastButton
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                {dateSortedposts
+                  .slice(
+                    (this.state.page - 1) * this.itemsPerPage,
+                    this.state.page * this.itemsPerPage
+                  )
+                  .map((post) => {
+                    return <Post post={post} key={post.id} {...this.props} />;
+                  })}
+              </>
+            )}
           </>
         )}
       </>
