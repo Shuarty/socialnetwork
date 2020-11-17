@@ -3,6 +3,8 @@ import {
   CREATE_COMMENT_ADD,
   FETCH_GET_COMMENTS,
   REQUEST_COMMENTS,
+  REQUEST_DELETE_COMMENT,
+  DELETE_COMMENT,
 } from "../types";
 
 let initialState = {
@@ -19,7 +21,15 @@ const commentReducer = (state = initialState, action) => {
       return { ...state };
     case FETCH_GET_COMMENTS:
       return { ...state, comments: action.payload.reverse() };
-
+    case REQUEST_DELETE_COMMENT:
+      return { ...state };
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        comments: state.comments.filter(
+          (comment) => comment.id !== action.payload
+        ),
+      };
     default:
       return state;
   }
