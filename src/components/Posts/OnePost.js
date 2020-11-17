@@ -14,6 +14,7 @@ class Post extends React.Component {
     this.state = {
       post: null,
       postID: null,
+      isLoading: false,
     };
   }
 
@@ -33,7 +34,9 @@ class Post extends React.Component {
         <NavBar />
 
         <div className="card">
-          {this.props.post ? (
+          {!!this.props.isLoading ? (
+            <Loader />
+          ) : (
             <>
               <div className="in-post-flex">
                 <div>
@@ -57,8 +60,6 @@ class Post extends React.Component {
                 </div>
               </div>
             </>
-          ) : (
-            <Loader />
           )}
         </div>
       </div>
@@ -68,6 +69,7 @@ class Post extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    isLoading: state.postsReducer.isLoading,
     post: state.postsReducer.post,
   };
 };

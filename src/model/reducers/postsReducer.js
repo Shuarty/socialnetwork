@@ -17,6 +17,7 @@ let initialState = {
   posts: [],
   post: [],
   countPages: null,
+  isLoading: false,
 };
 
 const postsReducer = (state = initialState, action) => {
@@ -33,16 +34,17 @@ const postsReducer = (state = initialState, action) => {
         posts: state.posts.filter((post) => post.id !== action.payload),
       };
     case REQUEST_POSTS:
-      return { ...state };
+      return { ...state, isLoading: true };
     case FETCH_POSTS:
       return {
         ...state,
         posts: action.payload,
         countPages: Math.ceil(action.payload.length / 10),
+        isLoading: false,
       };
 
     case REQUEST_FILTERED_POSTS:
-      return { ...state };
+      return { ...state, isLoading: true };
     case FETCH_FILTERED_POSTS:
       return {
         ...state,
@@ -54,11 +56,12 @@ const postsReducer = (state = initialState, action) => {
             (post) => post.user_id === +localStorage.getItem("user_id")
           ).length / 10
         ),
+        isLoading: false,
       };
     case REQUEST_ONE_POST:
-      return { ...state };
+      return { ...state, isLoading: true };
     case FETCH_ONE_POST:
-      return { ...state, post: action.payload };
+      return { ...state, post: action.payload, isLoading: false };
     case REQUEST_CHANGE_POST:
       return { ...state };
     case CHANGE_POST:

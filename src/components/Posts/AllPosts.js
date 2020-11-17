@@ -14,6 +14,7 @@ export class AllPosts extends React.Component {
       posts: [],
       page: 1,
       countPages: null,
+      isLoading: false,
     };
     this.itemsPerPage = 10;
 
@@ -31,9 +32,12 @@ export class AllPosts extends React.Component {
         dateTwo = new Date(b.created_at);
       return dateTwo - dateOne;
     });
+
     return (
       <>
-        {this.props.posts.length ? (
+        {!!this.props.isLoading ? (
+          <Loader />
+        ) : (
           <>
             {dateSortedposts
               .slice(
@@ -56,8 +60,6 @@ export class AllPosts extends React.Component {
               />
             </div>
           </>
-        ) : (
-          <Loader />
         )}
       </>
     );
@@ -109,6 +111,7 @@ class Post extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    isLoading: state.postsReducer.isLoading,
     posts: state.postsReducer.posts,
     countPages: state.postsReducer.countPages,
   };
