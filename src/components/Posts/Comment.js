@@ -9,14 +9,24 @@ import { connect } from "react-redux";
 import CommentForm from "./CommentForm";
 import CommentsAll from "./CommentsAll";
 
+import DeleteComment from "./DeleteComment";
+
 export class CommentContentxxx extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      comment: [],
+    };
+  }
+
   render() {
     let date = `${new Date(this.props.comment.created_at)}`;
     return (
       <AccordionDetails className="comment">
         <div style={{ width: "100%" }}>
-          <div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
             <h5>{this.props.comment.message}</h5>
+            <DeleteComment {...this.props} />
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div>
@@ -39,9 +49,9 @@ class Comment extends React.Component {
     this.clickHandler = this.clickHandler.bind(this);
   }
 
-  getComments = async () => {
+  getComments = () => {
     const action = fetchGetComments();
-    await this.props.dispatch(action);
+    this.props.dispatch(action);
   };
 
   clickHandler = () => {

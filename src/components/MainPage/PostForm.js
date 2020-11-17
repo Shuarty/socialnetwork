@@ -2,7 +2,8 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import { createPost, fetchPosts } from "../../model/actions/postsAction";
+import { createPost } from "../../model/actions/postsAction";
+import "./MainPage.css";
 
 class PostForm extends React.Component {
   constructor(props) {
@@ -15,11 +16,6 @@ class PostForm extends React.Component {
     this.submitHandler = this.submitHandler.bind(this);
     this.handleChangeInput = this.handleChangeInput.bind(this);
   }
-
-  getPosts = async () => {
-    const action = fetchPosts();
-    await this.props.dispatch(action);
-  };
 
   addPost = async () => {
     const { title } = this.state;
@@ -34,11 +30,10 @@ class PostForm extends React.Component {
   };
 
   submitHandler = (event) => {
-    this.addPost().then(setTimeout(this.getPosts, 500));
+    event.preventDefault();
+    this.addPost();
 
     this.setState({ title: "", description: "" });
-
-    event.preventDefault();
   };
 
   handleChangeInput = (event) => {
@@ -69,15 +64,14 @@ class PostForm extends React.Component {
           label="Type your description"
           variant="outlined"
           className="input-post"
-          style={{ marginTop: 10 }}
           onChange={this.handleChangeInput}
           value={this.state.description}
         />
         <Button
+          id="submit-button"
           type="submit"
           variant="contained"
           color="primary"
-          style={{ marginTop: 10, width: "100%" }}
         >
           Add Post
         </Button>

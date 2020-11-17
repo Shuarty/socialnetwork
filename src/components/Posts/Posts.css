@@ -1,12 +1,3 @@
-.navbar {
-  width: 100%;
-  height: 50px;
-  background-color: blue;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
 .wrapper {
   max-width: 1260px;
   margin: 0 auto;
@@ -21,17 +12,6 @@
   min-height: 130px;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-}
-
-.form-post {
-  margin: 0 auto;
-  max-width: 800px;
-  padding: 20px 0;
-}
-
-.input-post {
-  background-color: #fff;
-  width: 100%;
 }
 
 .title {
@@ -65,4 +45,30 @@
 
 .totalposts {
   padding-top: 30px;
+}
+
+.in-onepost {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  font-size: 13px;
+}
+
+.in-post-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+#modal-save {
+  width: 100%;
+}
+
+.delete-text {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-post-delete {
+  display: flex;
+  justify-content: space-around;
 }

@@ -1,14 +1,16 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { CREATE_POST, CREATE_POST_ADD } from "../types";
+import { REQUEST_CREATE_POST, CREATE_POST_ADD } from "../types";
 
 //LOADING POSTS
 export default function* sagasWatcherPostAdd() {
-  yield takeEvery(CREATE_POST, sagaWorkerPostAdd);
+  yield takeEvery(REQUEST_CREATE_POST, sagaWorkerPostAdd);
 }
 
 function* sagaWorkerPostAdd(action) {
-  const dataPost = action.payload;
+  const dataPost = action.post;
+
   const payload = yield call(fetchPostsAdd, dataPost);
+
   yield put({ type: CREATE_POST_ADD, payload });
 }
 

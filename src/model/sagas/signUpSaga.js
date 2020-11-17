@@ -1,14 +1,15 @@
 import { FETCH_AUTH_USER, REQUEST_AUTH_USER } from "../types";
 import { takeEvery, call, put } from "redux-saga/effects";
+import { history } from "../../index";
 
 export default function* sagasWatcherUserAuth() {
   yield takeEvery(FETCH_AUTH_USER, sagaWorkerUserAuth);
 }
 
 function* sagaWorkerUserAuth(action) {
-  console.log("dataInfoAUTH");
   const payload = yield call(fetchUserAuth, action);
   yield put({ type: REQUEST_AUTH_USER, payload });
+  yield call([history, history.push], "/main");
 }
 
 async function fetchUserAuth(payload) {
@@ -20,10 +21,8 @@ async function fetchUserAuth(payload) {
       },
       body: JSON.stringify(payload),
     });
-    const result = await res.json();
-
-    console.log(result);
-  } catch (err) {
-    console.log("error:", err.message);
+    await res.json();
+  } catch (e) {
+    console.log(e);
   }
 }
