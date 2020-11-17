@@ -8,9 +8,9 @@ export default function* sagasWatcherPostAdd() {
 
 function* sagaWorkerPostAdd(action) {
   const dataPost = action.post;
-  // console.log(action.post, "action post saga");
+
   const payload = yield call(fetchPostsAdd, dataPost);
-  // console.log(payload, "payload saga");
+
   yield put({ type: CREATE_POST_ADD, payload });
 }
 

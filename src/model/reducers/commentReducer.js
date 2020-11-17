@@ -1,4 +1,9 @@
-import { CREATE_COMMENT, FETCH_GET_COMMENTS, REQUEST_COMMENTS } from "../types";
+import {
+  REQUEST_CREATE_COMMENT,
+  CREATE_COMMENT_ADD,
+  FETCH_GET_COMMENTS,
+  REQUEST_COMMENTS,
+} from "../types";
 
 let initialState = {
   comments: [],
@@ -6,7 +11,9 @@ let initialState = {
 
 const commentReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_COMMENT:
+    case REQUEST_CREATE_COMMENT:
+      return { ...state };
+    case CREATE_COMMENT_ADD:
       return { ...state, comments: state.comments.concat(action.payload) };
     case REQUEST_COMMENTS:
       return { ...state };

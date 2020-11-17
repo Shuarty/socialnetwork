@@ -2,7 +2,7 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import { createPost, fetchPosts } from "../../model/actions/postsAction";
+import { createPost } from "../../model/actions/postsAction";
 import "./MainPage.css";
 
 class PostForm extends React.Component {
@@ -17,11 +17,6 @@ class PostForm extends React.Component {
     this.handleChangeInput = this.handleChangeInput.bind(this);
   }
 
-  // getPosts = async () => {
-  //   const action = fetchPosts();
-  //   await this.props.dispatch(action);
-  // };
-
   addPost = async () => {
     const { title } = this.state;
     const { description } = this.state;
@@ -32,7 +27,6 @@ class PostForm extends React.Component {
     };
     const action = createPost(newPost);
     await this.props.dispatch(action);
-    // await this.getPosts();
   };
 
   submitHandler = (event) => {

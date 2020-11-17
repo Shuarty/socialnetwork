@@ -1,12 +1,12 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { CREATE_COMMENT, CREATE_COMMENT_ADD } from "../types";
+import { REQUEST_CREATE_COMMENT, CREATE_COMMENT_ADD } from "../types";
 
 export default function* sagasWatcherCommentAdd() {
-  yield takeEvery(CREATE_COMMENT, sagaWorkerCommentAdd);
+  yield takeEvery(REQUEST_CREATE_COMMENT, sagaWorkerCommentAdd);
 }
 
 function* sagaWorkerCommentAdd(action) {
-  const data = action.payload;
+  const data = action.comment;
   const payload = yield call(fetchCommentAdd, data);
   yield put({ type: CREATE_COMMENT_ADD, payload });
 }

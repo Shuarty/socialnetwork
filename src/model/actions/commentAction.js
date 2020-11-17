@@ -1,4 +1,4 @@
-import { REQUEST_COMMENTS, CREATE_COMMENT } from "../types";
+import { REQUEST_COMMENTS, REQUEST_CREATE_COMMENT } from "../types";
 
 export function fetchGetComments() {
   return {
@@ -6,9 +6,9 @@ export function fetchGetComments() {
   };
 }
 
-export function fetchComment(payload) {
+export function fetchComment(comment) {
   return {
-    type: CREATE_COMMENT,
-    payload: payload,
+    type: REQUEST_CREATE_COMMENT,
+    comment,
   };
 }
