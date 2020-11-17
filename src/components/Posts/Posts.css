@@ -2,6 +2,7 @@
   max-width: 1260px;
   margin: 0 auto;
   background-color: #fffffa;
+  min-height: 94vh;
 }
 
 .card {

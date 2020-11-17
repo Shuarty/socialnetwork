@@ -6,7 +6,10 @@ export default function* sagasWatcherFilteredPosts() {
 }
 function* sagaWorkerFilteredPosts(action) {
   const payload = yield call(fetchFilteredPosts);
-  yield put({ type: FETCH_FILTERED_POSTS, payload });
+  const filtered = yield payload.filter(
+    (post) => post.user_id === +localStorage.getItem("user_id")
+  );
+  yield put({ type: FETCH_FILTERED_POSTS, filtered });
 }
 
 async function fetchFilteredPosts() {

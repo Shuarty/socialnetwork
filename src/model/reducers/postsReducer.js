@@ -23,7 +23,7 @@ let initialState = {
 const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case REQUEST_CREATE_POST:
-      return { ...state };
+      return { ...state, isLoading: true };
     case CREATE_POST_ADD:
       return { ...state, posts: state.posts.concat(action.payload) };
     case REQUEST_DELETE_POST:
@@ -44,24 +44,18 @@ const postsReducer = (state = initialState, action) => {
       };
 
     case REQUEST_FILTERED_POSTS:
-      return { ...state, isLoading: true };
+      return { ...state };
     case FETCH_FILTERED_POSTS:
       return {
         ...state,
-        posts: action.payload.filter(
-          (post) => post.user_id === +localStorage.getItem("user_id")
-        ),
-        countPages: Math.ceil(
-          action.payload.filter(
-            (post) => post.user_id === +localStorage.getItem("user_id")
-          ).length / 10
-        ),
+        posts: action.filtered,
+        countPages: Math.ceil(action.filtered.length / 10),
         isLoading: false,
       };
     case REQUEST_ONE_POST:
-      return { ...state, isLoading: true };
+      return { ...state };
     case FETCH_ONE_POST:
-      return { ...state, post: action.payload, isLoading: false };
+      return { ...state, post: action.payload };
     case REQUEST_CHANGE_POST:
       return { ...state };
     case CHANGE_POST:
