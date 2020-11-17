@@ -39,7 +39,7 @@ export class AllPosts extends React.Component {
           <Loader />
         ) : (
           <>
-            {this.props.posts.length > 0 ? (
+            {this.props.posts.length > this.itemsPerPage ? (
               <>
                 {dateSortedposts
                   .slice(
